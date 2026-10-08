@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div style="font-family: 'Lato', sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; border: 1px solid #cbd5e1; border-radius: 8px; background-color: #ffffff; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    
+    <button id="botoiGidaria" style="background-color: #3498db; color: white; border: none; padding: 12px 24px; font-size: 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s;">
+        Egin klik hemen irudi berria agertzeko
+    </button>
+
+    <div id="galeriaKutxa" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; min-height: 120px; margin-top: 20px; background-color: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 6px; padding: 15px;">
+        </div>
+    
+    <div style="margin-top: 10px; color: #64748b; font-size: 13px;">
+        <em>Irudi baten gainean klik bikoitza eginez gero, ezabatu egingo da.</em>
+    </div>
+
+    <script>
+        (function () {
+            // Zure aldagaiak modu seguruan deklaratuta (const/let bidez)
+            const irudiak = ["saludo1.jpg", "saludo2.jpg", "saludo3.jpg", "saludo4.jpg"];
+            const ezabatutakoak = [];
+            let kont = 0;
+
+            const botoia = document.getElementById("botoiGidaria");
+            const galeria = document.getElementById("galeriaKutxa");
+
+            // Botoiaren gertaera lotu
+            botoia.addEventListener("click", agurtu);
+
+            // Estilo politak botoiari sagua gainean jartzean
+            botoia.addEventListener("mouseover", () => botoia.style.backgroundColor = "#2980b9");
+            botoia.addEventListener("mouseout", () => botoia.style.backgroundColor = "#3498db");
+
+            function agurtu() {
+                if (kont === 4) {
+                    alert("Ezin da irudi gehiago atera");
+                } else {
+                    let irudia;
+
+                    // Ezabatutako irudirik badago, azkena berreskuratu
+                    if (ezabatutakoak.length > 0) {
+                        irudia = ezabatutakoak.pop();
+                    } else {
+                        // Bestela, berri bat sortu
+                        irudia = document.createElement("img");
+                        irudia.src = irudiak[kont];
+                        
+                        // Estilo oinarrizkoak irudiek tamaina handiegirik izan ez dezaten
+                        irudia.style.width = "180px";
+                        irudia.style.height = "120px";
+                        irudia.style.borderRadius = "4px";
+                        irudia.style.boxShadow = "0 2px 4px rgba(0,0,0,0.15)";
+                        irudia.style.cursor = "pointer";
+
+                        // Klik bikoitzaren gertaera behin bakarrik esleitu sorkuntzan
+                        irudia.addEventListener("dblclick", function () {
+                            ezabatu(irudia);
+                        });
+                    }
+
+                    // Irudia galerian txertatu (lehen document.body-n txertatzen zena)
+                    galeria.appendChild(irudia);
+                    kont++;
+                }
+            }
+
+            function ezabatu(zein) {
+                // Irudia orrialdetik kendu
+                galeria.removeChild(zein);
+                kont--;
+                // Ezabatutakoen array-an gorde, gero berriro erabili ahal izateko
+                ezabatutakoak.push(zein);
+            }
+        })();
+    </script>
+</div>
+</div>
+</body>
+</html>
